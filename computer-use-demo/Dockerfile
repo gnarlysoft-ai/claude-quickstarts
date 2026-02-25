@@ -51,6 +51,11 @@ RUN apt-get update && \
     unzip && \
     apt-get clean
 
+# Install 1Password extension for Firefox ESR
+RUN mkdir -p /usr/lib/firefox-esr/distribution/extensions && \
+    curl -fSL -o '/usr/lib/firefox-esr/distribution/extensions/{d634138d-c276-4fc8-924b-40a0ea21d284}.xpi' \
+    'https://addons.mozilla.org/firefox/downloads/latest/1password-x-password-manager/latest.xpi'
+
 # Install noVNC
 RUN git clone --branch v1.5.0 https://github.com/novnc/noVNC.git /opt/noVNC && \
     git clone --branch v0.12.0 https://github.com/novnc/websockify /opt/noVNC/utils/websockify && \

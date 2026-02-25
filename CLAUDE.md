@@ -10,7 +10,20 @@
 
 - **Setup environment**: `./setup.sh`
 - **Build Docker**: `docker build . -t computer-use-demo:local`
-- **Run container**: `docker run -e ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY -v $(pwd)/computer_use_demo:/home/computeruse/computer_use_demo/ -v $HOME/.anthropic:/home/computeruse/.anthropic -p 5900:5900 -p 8501:8501 -p 6080:6080 -p 8080:8080 -it computer-use-demo:local`
+- **Run container**: `./run.sh` (uses configured image if available, falls back to base)
+- **Run with base image**: `./run.sh --base`
+- **Create .env**: Add `ANTHROPIC_API_KEY=your-key` to `computer-use-demo/.env`
+
+### Configuring the Docker Image
+
+The base image includes the 1Password Firefox extension pre-installed. To create a fully configured image with your Firefox profile and extensions:
+
+1. Build the base image: `docker build . -t computer-use-demo:local`
+2. Run with base: `./run.sh --base`
+3. Connect via noVNC (http://localhost:6080) and configure Firefox, sign into 1Password, etc.
+4. Commit the snapshot: `docker commit computer-use-demo computer-use-demo:configured`
+
+Future runs with `./run.sh` will use the configured image automatically. Note: the `computer-use-demo:configured` image is local-only and not stored in git.
 
 ### Testing & Code Quality
 
