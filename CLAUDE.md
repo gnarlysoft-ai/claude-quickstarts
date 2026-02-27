@@ -25,6 +25,17 @@ The base image includes the 1Password Firefox extension pre-installed. To create
 
 Future runs with `./run.sh` will use the configured image automatically. Note: the `computer-use-demo:configured` image is local-only and not stored in git.
 
+### REST API
+
+- **API server**: Runs on port 8000 inside the container, mapped to `http://localhost:8000`
+- **Health check**: `GET /health`
+- **Create session**: `POST /sessions` (optional JSON body with model, provider, tool_version, etc.)
+- **Send message (sync)**: `POST /sessions/{id}/messages` with `{"message": "..."}`
+- **Send message (SSE)**: `POST /sessions/{id}/messages/stream` with `{"message": "..."}`
+- **Get messages**: `GET /sessions/{id}/messages?include_images=false`
+- **Config**: `GET /config`, `PUT /config/system-prompt`
+- **Entrypoint**: `python -m uvicorn computer_use_demo.api:app --host 0.0.0.0 --port 8000`
+
 ### Testing & Code Quality
 
 - **Lint**: `ruff check .`

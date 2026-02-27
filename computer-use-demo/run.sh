@@ -40,12 +40,14 @@ docker run \
     -p 8501:8501 \
     -p 6080:6080 \
     -p 8080:8080 \
+    -p "${API_PORT:-8000}":8000 \
     -d --name computer-use-demo \
     "$IMAGE"
 
 echo ""
 echo "Computer Use Demo is starting..."
 echo "  Streamlit UI: http://localhost:8501"
+echo "  REST API:     http://localhost:${API_PORT:-8000}"
 echo "  noVNC:        http://localhost:6080"
 echo "  Web UI:       http://localhost:8080"
 echo "  VNC direct:   localhost:5901"
